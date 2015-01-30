@@ -2,6 +2,17 @@
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f| %>
     <h3>Sign in</h3>
     <%= devise_error_messages! %>
+    <%- if devise_mapping.omniauthable? %>
+	  <%- resource_class.omniauth_providers.each do |provider| %>
+	<div class="btn-group btn-group-justified">
+	 <%= link_to omniauth_authorize_path(resource_name, provider), :class => "btn btn-success btn-lg", :style=> "background-color:#3B5998" do %>
+	 	<span class= "fa fa-facebook"></span>
+	 	Sign in with <%= "#{provider.to_s.titleize}"%>
+	 	<%end%>
+	</div>
+	  </br>
+	  <% end -%>
+	<% end -%>
     <div class="form-group">
       <%- if devise_mapping.registerable? %>
         <%= link_to 'Sign up', new_registration_path(resource_name), class: 'right'  %>
